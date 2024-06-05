@@ -77,6 +77,7 @@ const Descargas = () => {
                   </svg>
                 </Link>
               </td>
+              <td className="px-6 py-4 whitespace-nowrap text-white font-bold">138MB</td>
             </tr>
             <td className="px-6 py-4 whitespace-nowrap text-white font-bold">
                 MEDIAFIRE

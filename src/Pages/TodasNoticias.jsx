@@ -13,9 +13,14 @@ const TodasNoticias = () => {
   useEffect(() => {
     const obtenerTodasLasNoticias = async () => {
           try {
-            const respuesta = await fetch('http://localhost:5555/api/obtenerNoticias')
+            const respuesta = await fetch('https://backendv2-7a61b60e5f29.herokuapp.com/api/obtenerNoticias')
             const resultado = await respuesta.json()
-            setNoticias(resultado)
+            const ordenarNoticia = resultado.sort((a, b) => {
+              const fechaA = new Date(a.fecha)
+              const fechaB = new Date(b.fecha)
+              return fechaB - fechaA
+            })
+            setNoticias(ordenarNoticia)
           } catch (error) {
             console.log(error)
           }

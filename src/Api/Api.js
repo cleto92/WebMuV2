@@ -23,7 +23,8 @@ export const useCrearCuenta = () => {
         onSubmit: async (values, {resetForm}) => {
             setLoading(true)
             try {
-             const respuesta = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/crearCuenta`, {
+                
+             const respuesta = await fetch("https://backendv2-7a61b60e5f29.herokuapp.com/api/crearCuenta", {
                 method: 'POST',
                 headers: {
                     "Content-Type" : "application/json",

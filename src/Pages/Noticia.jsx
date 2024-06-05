@@ -11,7 +11,7 @@ const Noticia = () => {
     useEffect(() => {
       const obtenerNoticia = async () => {
         try {
-          const respuesta = await fetch(`http://localhost:5555/api/obtenerNoticiaId/${id}`); 
+          const respuesta = await fetch(`https://backendv2-7a61b60e5f29.herokuapp.com/api/obtenerNoticiaId/${id}`); 
           const datos = await respuesta.json();
           setNoticia(datos);
           console.log([datos])

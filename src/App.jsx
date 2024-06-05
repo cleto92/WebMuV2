@@ -15,6 +15,8 @@ import Admin from "./Admin/Admin";
 import CrearNoticia from "./Admin/CrearNoticia";
 import NoticiaID from "./Pages/Noticia";
 import TodasNoticias from "./Pages/TodasNoticias";
+import VerNoticias from "./Admin/Pages/VerNoticias";
+import EditarNoticia from "./Admin/Pages/EditarNoticia";
 
 const App = () => {
   return (
@@ -28,14 +30,16 @@ const App = () => {
         <Route path="/rankingClanes" element={<RankingClanes />} />
         <Route path="/RecuperarCuenta" element={<RecuperarCuenta />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/MiCuenta" element={<MiCuenta />} />
-        <Route path="/MisPersonajes" element={<MisPersonajes />} />
+        <Route path="/MiCuenta/" element={<MiCuenta />} />
+        <Route path="/MisPersonajes/:accountID" element={<MisPersonajes />} />
         <Route path="/ComprarVip" element={<ComprarVip />} />
         <Route path="/cambiarContraseña" element={<CambiarContraseña />} />
         <Route path="/Admin" element={<Admin />} />
         <Route path="/CrearNoticia" element={<CrearNoticia />} />
         <Route path="/Noticia/:id" element={<NoticiaID />} />
         <Route path="/mas-noticias" element={<TodasNoticias />} />
+        <Route path='/VerNoticias' element={<VerNoticias />} />
+        <Route path='/EditarNoticia/:id' element={<EditarNoticia />} />
       </Routes>
     </Router>
   );

@@ -1,21 +1,18 @@
-
-
 import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Layout from "../Components/Layout";
 import Personaje from "../Components/Personaje";
 import { Spinner } from "@nextui-org/react";
-import { useNavigate } from "react-router-dom";
 
 const MisPersonajes = () => {
   const [personajes, setPersonajes] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { accountID } = useParams();
 
   useEffect(() => {
-
     const token = sessionStorage.getItem('token');
     if (!token) {
-
       navigate('/Login');
     }
   }, [navigate]);
@@ -24,19 +21,12 @@ const MisPersonajes = () => {
     const obtenerPersonajesDeLaCuenta = async () => {
       setLoading(true);
       try {
-        const memb___id = sessionStorage.getItem("memb___id");
-        if (!memb___id) {
-          throw new Error(
-            "No se encontró el ID de la cuenta. Por favor, inicia sesión."
-          );
-        }
-
         const token = sessionStorage.getItem("token");
         if (!token) {
           throw new Error("No se encontró el token. Por favor, inicia sesión.");
         }
 
-        const url = `http://localhost:5555/api/obtenerPersonajesCuenta/${memb___id}`;
+        const url = `https://backendv2-7a61b60e5f29.herokuapp.com/api/obtenerPersonajesCuenta/${accountID}`;
 
         const response = await fetch(url, {
           method: "GET",
@@ -58,7 +48,7 @@ const MisPersonajes = () => {
     };
 
     obtenerPersonajesDeLaCuenta();
-  }, []);
+  }, [accountID]);
 
   return (
     <Layout>

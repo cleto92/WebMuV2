@@ -12,7 +12,7 @@ const Rankings = () => {
     const obtenerJugadores = async () => {
       try {
         const respuesta = await fetch(
-          "http://localhost:5555/api/obtenerUserReset"
+          "https://backendv2-7a61b60e5f29.herokuapp.com/api/obtenerUserReset"
         );
         const resultado = await respuesta.json();
         setRankingJugadores(resultado.usuariosReset);

@@ -10,7 +10,7 @@ const Estadisticas = () => {
     const ObtenerPersonajes = async () => {
       try {
         const respuesta = await fetch(
-          "http://localhost:5555/api/obtenerPersonajes",
+          "https://backendv2-7a61b60e5f29.herokuapp.com/api/obtenerPersonajes",
           {
             method: "GET",
             headers: {
@@ -33,7 +33,7 @@ const Estadisticas = () => {
     const obtenerUsuarios = async () => {
       try {
         const respuesta = await fetch(
-          "http://localhost:5555/api/usuariosOnlineSlow",
+          "https://backendv2-7a61b60e5f29.herokuapp.com/api/usuariosOnlineSlow",
           {
             method: "GET",
             headers: {
@@ -55,7 +55,7 @@ const Estadisticas = () => {
     const obtenerCuentas = async () => {
       try {
         const respuesta = await fetch(
-          "http://localhost:5555/api/ObtenerCuentas"
+          "https://backendv2-7a61b60e5f29.herokuapp.com/api/ObtenerCuentas"
         );
         const resultado = await respuesta.json();
         setTotalCuentas(resultado.cuentas);
@@ -70,7 +70,7 @@ const Estadisticas = () => {
     const obtenerClanesCreados = async () => {
       try {
         const respuesta = await fetch(
-          "http://localhost:5555/api/obtenerClanesCreados"
+          "https://backendv2-7a61b60e5f29.herokuapp.com/api/obtenerClanesCreados"
         );
         const resultado = await respuesta.json();
         setTotalClanes(resultado.clanes);

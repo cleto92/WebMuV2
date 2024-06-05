@@ -39,7 +39,7 @@ const Personaje = ({ personajes }) => {
 
   const moverPersonaje = async (nombrePersonaje) => {
     try {
-      const url = "http://localhost:5555/api/moverPersonaje"; 
+      const url = "https://backendv2-7a61b60e5f29.herokuapp.com/api/moverPersonaje"; 
       const response = await fetch(url, {
         method: "POST",
         headers: {

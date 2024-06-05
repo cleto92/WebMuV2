@@ -36,7 +36,7 @@ const ListadoNoticias = ({ noticias }) => {
               [{noticia.fecha}]
             </span>
             <Link to={`/Noticia/${noticia._id}`} className="hover:text-gray-300">
-              <span className="text-lg text-white font-semibold">
+              <span className="text-lg text-white font-semibold hover:text-blue-400">
                 {noticia.titulo}
               </span>
             </Link>

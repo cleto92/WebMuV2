@@ -1,8 +1,6 @@
 import Layout from "../Components/Layout";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const CrearNoticia = () => {
   const navigate = useNavigate();
@@ -16,7 +14,7 @@ const CrearNoticia = () => {
   const handleCrearNoticia = async (e) => {
     e.preventDefault();
     try {
-      const respuesta = await fetch("http://localhost:5555/api/crearNoticia", {
+      const respuesta = await fetch("https://backendv2-7a61b60e5f29.herokuapp.com/api/crearNoticia", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,7 +24,7 @@ const CrearNoticia = () => {
           titulo,
           subtitulo,
           contenido,
-          autor
+          autor,
         }),
       });
       const resultado = await respuesta.json();
@@ -104,13 +102,11 @@ const CrearNoticia = () => {
             </label>
             <label htmlFor="contenido" className="block">
               <span className="text-red-600 font-bold">Contenido:</span>
-              <CKEditor
-                editor={ClassicEditor}
-                data={contenido}
-                onChange={(event, editor) => {
-                  const data = editor.getData();
-                  setContenido(data);
-                }}
+              <textarea
+                className="w-full h-96 p-2 border border-gray-300 rounded-md resize-none"
+                value={contenido}
+                onChange={(e) => setContenido(e.target.value)}
+                placeholder="Escribe algo aquí..."
               />
             </label>
           </div>

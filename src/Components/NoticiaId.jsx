@@ -30,8 +30,8 @@ const NoticiaId = ({ noticia }) => {
         <p className="mb-4 text-center text-sm text-gray-500">
           <span className="font-semibold text-white">Autor:</span>
           <span className="mx-2 font-semibold text-red-600">
-            {noticia.autor}{" "}
-          </span>{" "}
+            {noticia.autor}
+          </span>
           | <span className="font-semibold text-white">Fecha:</span>
           <span className="mx-2 font-semibold text-blue-400">
             {noticia.fecha}
@@ -39,7 +39,11 @@ const NoticiaId = ({ noticia }) => {
         </p>
         <hr className="mb-8 border-gray-300" />
         <div className="text-gray-700 leading-relaxed">
-        <div className="flex justify-center whitespace-pre-line text-white" dangerouslySetInnerHTML={{ __html: noticia.contenido }}></div>
+        <div className="flex justify-center">
+  <div className="max-w-lg w-full whitespace-pre-line text-white" dangerouslySetInnerHTML={{ __html: noticia.contenido }}></div>
+</div>
+
+
         </div>
       </div>
     </div>

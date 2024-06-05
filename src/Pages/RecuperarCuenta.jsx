@@ -15,7 +15,7 @@ const RecuperarCuenta = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        "https://club5backend-89b9966266b1.herokuapp.com/api/recuperarCuenta",
+        "https://backendv2-7a61b60e5f29.herokuapp.com/api/recuperarCuenta",
         {
           method: "POST",
           headers: {
