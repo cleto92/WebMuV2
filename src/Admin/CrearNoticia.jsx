@@ -14,7 +14,7 @@ const CrearNoticia = () => {
   const handleCrearNoticia = async (e) => {
     e.preventDefault();
     try {
-      const respuesta = await fetch("https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/crearNoticia", {
+      const respuesta = await fetch(`https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/crearNoticia`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

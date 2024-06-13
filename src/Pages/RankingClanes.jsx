@@ -14,7 +14,7 @@ const RankingClanes = () => {
     const obtenerClanes = async () => {
       try {
         const respuesta = await fetch(
-          "https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerClanes"
+          `https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerClanes`
         );
         const resultado = await respuesta.json();
         setClanes(resultado.clanes);

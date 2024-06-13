@@ -13,7 +13,7 @@ const TodasNoticias = () => {
   useEffect(() => {
     const obtenerTodasLasNoticias = async () => {
           try {
-            const respuesta = await fetch('https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerNoticias')
+            const respuesta = await fetch(`https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerNoticias`)
             const resultado = await respuesta.json()
             const ordenarNoticia = resultado.sort((a, b) => {
               const fechaA = new Date(a.fecha)

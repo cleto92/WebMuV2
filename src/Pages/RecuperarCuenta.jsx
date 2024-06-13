@@ -15,7 +15,7 @@ const RecuperarCuenta = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        "https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/recuperarCuenta",
+        `https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/recuperarCuenta`,
         {
           method: "POST",
           headers: {
