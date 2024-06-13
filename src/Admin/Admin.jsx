@@ -48,7 +48,7 @@ const Admin = () => {
         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
         <Link to='/VerNoticias' className="mr-5 hover:text-red-600 cursor-pointer font-semibold">Ver Noticias</Link>
         <Link to='/CrearNoticia' className="mr-5 hover:text-red-600 cursor-pointer font-semibold">Crear Noticia</Link>
-        <Link to='#' className="mr-5 hover:text-red-600 cursor-pointer font-semibold">Editar Personaje</Link>
+        <Link to='/EditarPersonaje' className="mr-5 hover:text-red-600 cursor-pointer font-semibold">Editar Personaje</Link>
         <Link onClick={CerrandoSesion} className="mr-5 hover:text-red-600 cursor-pointer font-semibold">Cerrar Sesión</Link>
       </nav>
         </div>

@@ -26,7 +26,7 @@ const MisPersonajes = () => {
           throw new Error("No se encontró el token. Por favor, inicia sesión.");
         }
 
-        const url = `https://backendv2-7a61b60e5f29.herokuapp.com/api/obtenerPersonajesCuenta/${accountID}`;
+        const url = `https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerPersonajesCuenta/${accountID}`;
 
         const response = await fetch(url, {
           method: "GET",

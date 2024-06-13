@@ -11,7 +11,7 @@ const EditarNoticia = () => {
     const obtenerNoticia = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5555/api/obtenerNoticiaId/${id}`
+          `https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerNoticiaId/${id}`
         );
         const data = await response.json();
         setNoticia(data);
@@ -35,7 +35,7 @@ const EditarNoticia = () => {
     e.preventDefault();
     try {
       const respuesta = await fetch(
-        `https://backendv2-7a61b60e5f29.herokuapp.com/api/editarNoticia/${id}`,
+        `https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/editarNoticia/${id}`,
         {
           method: "PUT",
           headers: {

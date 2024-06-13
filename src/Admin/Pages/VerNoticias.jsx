@@ -10,7 +10,7 @@ const VerNoticias = () => {
   useEffect(() => {
     const obtenerNoticias = async () => {
       try {
-        const data = await fetch("https://backendv2-7a61b60e5f29.herokuapp.com/api/obtenerNoticias");
+        const data = await fetch("https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerNoticias");
         const response = await data.json();
         const noticiasOrdenadas = response.sort((a, b) => {
           const fechaA = new Date(a.fecha);

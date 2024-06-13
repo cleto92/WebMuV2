@@ -10,7 +10,7 @@ const Estadisticas = () => {
     const ObtenerPersonajes = async () => {
       try {
         const respuesta = await fetch(
-          "https://backendv2-7a61b60e5f29.herokuapp.com/api/obtenerPersonajes",
+          "https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerPersonajes",
           {
             method: "GET",
             headers: {
@@ -33,7 +33,7 @@ const Estadisticas = () => {
     const obtenerUsuarios = async () => {
       try {
         const respuesta = await fetch(
-          "https://backendv2-7a61b60e5f29.herokuapp.com/api/usuariosOnlineSlow",
+          "https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/usuariosOnlineSlow",
           {
             method: "GET",
             headers: {
@@ -55,7 +55,7 @@ const Estadisticas = () => {
     const obtenerCuentas = async () => {
       try {
         const respuesta = await fetch(
-          "https://backendv2-7a61b60e5f29.herokuapp.com/api/ObtenerCuentas"
+          "https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/ObtenerCuentas"
         );
         const resultado = await respuesta.json();
         setTotalCuentas(resultado.cuentas);

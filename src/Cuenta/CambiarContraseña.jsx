@@ -34,7 +34,7 @@ const CambiarContraseña = () => {
 
     try {
       const response = await fetch(
-        "https://backendv2-7a61b60e5f29.herokuapp.com/api/cambiarPassword",
+        "https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/cambiarPassword",
         {
           method: "POST",
           headers: {

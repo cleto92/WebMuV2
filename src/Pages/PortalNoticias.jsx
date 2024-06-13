@@ -9,7 +9,7 @@ const PortalNoticias = () => {
     const obtenerNoticiaPorId = async () => {
       try {
         const respuesta = await fetch(
-          "https://backendv2-7a61b60e5f29.herokuapp.com/api/obtenerNoticias"
+          "https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerNoticias"
         );
         if (!respuesta.ok) {
           throw new Error("No se pudo obtener la noticia");

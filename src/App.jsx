@@ -17,6 +17,7 @@ import NoticiaID from "./Pages/Noticia";
 import TodasNoticias from "./Pages/TodasNoticias";
 import VerNoticias from "./Admin/Pages/VerNoticias";
 import EditarNoticia from "./Admin/Pages/EditarNoticia";
+import EditarPersonaje from "./Admin/Pages/EditarPersonaje";
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
         <Route path="/mas-noticias" element={<TodasNoticias />} />
         <Route path='/VerNoticias' element={<VerNoticias />} />
         <Route path='/EditarNoticia/:id' element={<EditarNoticia />} />
+        <Route path="/EditarPersonaje" element={<EditarPersonaje />} />
       </Routes>
     </Router>
   );

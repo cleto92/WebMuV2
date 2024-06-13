@@ -10,7 +10,7 @@ const VerNoticia = ({ noticia }) => {
   useEffect(() => {
     const obtenerNoticiaId = async () => {
       try {
-        const response = await fetch(`http://localhost:5555/api/obtenerNoticiaId/${_id}`);
+        const response = await fetch(`https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerNoticiaId/${_id}`);
         const data = await response.json(); 
         setNoticiaId(data);
       } catch (error) {
@@ -27,7 +27,7 @@ const VerNoticia = ({ noticia }) => {
     if (window.confirm("¿Desea eliminar la noticia?")) {
       try {
         const response = await fetch(
-          `https://backendv2-7a61b60e5f29.herokuapp.com/api/eliminarNoticia/${id}`,
+          `https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/eliminarNoticia/${id}`,
           {
             method: "DELETE",
           }
