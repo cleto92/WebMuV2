@@ -4,7 +4,31 @@ const Estadisticas = () => {
   const [usuariosOnline, setUsuariosOnline] = useState(0);
   const [totalCuentas, setTotalCuentas] = useState();
   const [totalPersonajes, setTotalPersonajes] = useState(0);
-  const [totalClanes, setTotalClanes] = useState(0);
+
+  const [serverEstado, setServerEstado] = useState('')
+
+  useEffect(() => {
+    const serverEstadoGet = async () => {
+      try {
+        const respuesta = await fetch(
+          "http://localhost:5555/api/estado-servidor",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            cache: "no-cache",
+          }
+        );
+        const resultado = await respuesta.json();
+        setServerEstado(resultado.estado);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    serverEstadoGet();
+  }, []);
 
   useEffect(() => {
     const ObtenerPersonajes = async () => {
@@ -66,20 +90,7 @@ const Estadisticas = () => {
     obtenerCuentas();
   }, []);
 
-  useEffect(() => {
-    const obtenerClanesCreados = async () => {
-      try {
-        const respuesta = await fetch(
-          "https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerClanesCreados"
-        );
-        const resultado = await respuesta.json();
-        setTotalClanes(resultado.clanes);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    obtenerClanesCreados();
-  }, []);
+
 
   return (
     <div className="bg-transparent py-6 sm:py-8 lg:py-12">
@@ -111,6 +122,7 @@ const Estadisticas = () => {
             </div>
           </div>
 
+
           <div className="flex flex-col items-center md:p-4">
             <div className="text-xl font-bold text-indigo-500 sm:text-2xl md:text-3xl">
               {totalPersonajes}
@@ -119,15 +131,16 @@ const Estadisticas = () => {
               Personajes
             </div>
           </div>
-
           <div className="flex flex-col items-center md:p-4">
             <div className="text-xl font-bold text-indigo-500 sm:text-2xl md:text-3xl">
-              {totalClanes}
+              {serverEstado}
             </div>
-            <div className="text-sm text-white font-semibold sm:text-base">
-              Clanes
+            <div className="text-sm font-semibold text-white sm:text-base">
+              Estado del Servidor
             </div>
           </div>
+
+          
         </div>
       </div>
     </div>
