@@ -11,7 +11,7 @@ const Estadisticas = () => {
     const serverEstadoGet = async () => {
       try {
         const respuesta = await fetch(
-          "http://localhost:5555/api/estado-servidor",
+          "https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/estado-servidor",
           {
             method: "GET",
             headers: {
@@ -21,9 +21,14 @@ const Estadisticas = () => {
           }
         );
         const resultado = await respuesta.json();
-        setServerEstado(resultado.estado);
+        if (resultado.estado === 'online') {
+          setServerEstado('ONLINE');
+        } else {
+          setServerEstado('OFFLINE');
+        }
       } catch (error) {
         console.log(error);
+        setServerEstado('OFFLINE'); 
       }
     };
 
