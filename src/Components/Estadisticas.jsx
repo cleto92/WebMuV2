@@ -137,13 +137,25 @@ const Estadisticas = () => {
             </div>
           </div>
           <div className="flex flex-col items-center md:p-4">
-            <div className="text-xl font-bold text-indigo-500 sm:text-2xl md:text-3xl">
-              {serverEstado}
-            </div>
-            <div className="text-sm font-semibold text-white sm:text-base">
-              Estado del Servidor
-            </div>
+      <div>
+        {serverEstado === 'Cargando...' ? (
+          <div className="text-xl font-bold text-yellow-700 sm:text-2xl md:text-3xl">
+            {serverEstado}
           </div>
+        ) : serverEstado === 'ONLINE' ? (
+          <div className="text-xl font-bold text-green-700 sm:text-2xl md:text-3xl">
+            {serverEstado}
+          </div>
+        ) : (
+          <div className="text-xl font-bold text-red-700 sm:text-2xl md:text-3xl">
+            {serverEstado}
+          </div>
+        )}
+      </div>
+      <div className="text-sm font-semibold text-white sm:text-base">
+        Estado del Servidor
+      </div>
+    </div>
 
           
         </div>

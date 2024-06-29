@@ -100,9 +100,9 @@ const Descargas = () => {
               <td className="px-6 py-4 whitespace-nowrap text-white font-bold">
                 MEDIAFIRE
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-white font-bold">PARCHE V3</td>
+              <td className="px-6 py-4 whitespace-nowrap text-white font-bold">PARCHE V4</td>
               <td className="px-6 py-4 whitespace-nowrap text-white">
-                <Link to="https://www.mediafire.com/file/ffytqkchhyy8eq0/PARCHE_V3.rar/file">
+                <Link to="https://www.mediafire.com/file/f0sulpjqjnuim3y/ParcheV4.rar/file">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
