@@ -1,125 +1,77 @@
+// src/pages/LoginOff.js
 import Layout from "../Components/Layout";
 import { Spinner } from "@nextui-org/react";
-import { useState, useEffect } from "react";
+import { useLogin } from "../Api/Api";
 
-const RecuperarCuenta = () => {
-  const [cargando, setCargando] = useState(true);
-  const [email, setEmail] = useState("");
-  const [IDUnico, setIDUnico] = useState("");
-  const [memb___id, setMemb___id] = useState("");
-  const [mensaje, setMensaje] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        `https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/recuperarCuenta`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, IDUnico, memb___id }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Hubo un error al recuperar la cuenta");
-      }
-
-      const result = await response.json();
-      setMensaje(result.mensaje);
-    } catch (error) {
-      setMensaje(error.message);
-    }
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setCargando(false);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
+const LoginOff = () => {
+  const { cargando, mensajeError, formik } = useLogin();
 
   if (cargando) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-gray-700 via-gray-900 to-black">
-      <Spinner />
-    </div>
+        <Spinner />
+      </div>
     );
   }
 
   return (
     <Layout>
-      {mensaje && <div className="mb-12 rounded py-4 text-center bg-green-600 items-center text-white">{mensaje}</div>}
-      <form onSubmit={handleSubmit} className="space-y-2 max-w-lg mx-auto">
-        <div>
-          <label
-            htmlFor="cuenta"
-            className="block text-sm font-semibold text-white"
-          >
-            CUENTA
-          </label>
-          <input
-            value={memb___id}
-            required
-            onChange={(e) => setMemb___id(e.target.value)}
-            type="text"
-            name="cuenta"
-            className="mt-1 block w-full rounded-lg border-gray-300 px-3 py-2 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="nombre"
-            className="block text-sm font-semibold text-white"
-          >
-            EMAIL
-          </label>
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            type="email"
-            name="email"
-            className="mt-1 block w-full rounded-lg border-gray-300 px-3 py-2 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="apellido"
-            className="block text-sm font-semibold text-white"
-          >
-            ID UNICO
-          </label>
-          <input
-            required
-            type="text"
-            name="IDUnico"
-            onChange={(e) => setIDUnico(e.target.value)}
-            value={IDUnico}
-            className="mt-1 block w-full rounded-lg border-gray-300 px-3 py-2 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          />
-        </div>
-        <div className="flex mb-10">
-          {isLoading ? (
-            <Spinner className="items-center text-center justify-center" />
-          ) : (
-            <button
-              type="submit"
-              className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
-            >
-              RECUPERAR CUENTA
-            </button>
+      <div className="bg-transparent py-6 sm:py-8 lg:py-12">
+        <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
+          <h2 className="mb-4 text-center text-2xl font-bold text-green-800 md:mb-8 lg:text-3xl">
+            Ingresar a mi Cuenta
+          </h2>
+          {mensajeError && (
+            <div className="mx-auto mb-12 max-w-md rounded py-4 text-center bg-red-600 items-center text-white">
+              {mensajeError}
+            </div>
           )}
+          <form onSubmit={formik.handleSubmit} className="mx-auto max-w-lg rounded-lg border">
+            <div className="flex flex-col gap-4 p-4 md:p-8">
+              <div>
+                <label htmlFor="memb___id" className="mb-2 inline-block text-sm text-white font-semibold sm:text-base">
+                  Cuenta
+                </label>
+                <input
+                  value={formik.values.memb___id}
+                  required
+                  onChange={formik.handleChange}
+                  type="text"
+                  name="memb___id"
+                  className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
+                />
+              </div>
+              <div>
+                <label htmlFor="memb__pwd" className="mb-2 inline-block text-sm text-white font-semibold sm:text-base">
+                  Password
+                </label>
+                <input
+                  value={formik.values.memb__pwd}
+                  required
+                  onChange={formik.handleChange}
+                  type="password"
+                  name="memb__pwd"
+                  className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
+                />
+              </div>
+              <div className="relative flex items-center justify-center mb-10">
+                {formik.isSubmitting ? (
+                  <Spinner className="items-center text-center justify-center" />
+                ) : (
+                  <button
+                    type="submit"
+                    className="inline-block rounded-lg bg-gray-800 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-gray-300 transition duration-100 hover:bg-gray-700 focus-visible:ring active:bg-gray-600 md:text-base"
+                  >
+                    Ingresar
+                  </button>
+                )}
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </Layout>
   );
 };
 
-export default RecuperarCuenta;
+export default LoginOff;

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Layout from "../Components/Layout";
 import Personaje from "../Components/Personaje";
 import { Spinner } from "@nextui-org/react";
+import { getObtenerPersonajesCuenta } from "../Api/ApiCuenta";
 
 const MisPersonajes = () => {
   const [personajes, setPersonajes] = useState([]);
@@ -11,43 +12,32 @@ const MisPersonajes = () => {
   const { accountID } = useParams();
 
   useEffect(() => {
-    const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem("token");
     if (!token) {
-      navigate('/Login');
+      navigate("/Login");
     }
   }, [navigate]);
 
   useEffect(() => {
-    const obtenerPersonajesDeLaCuenta = async () => {
+    const fetchObtenerPersonajesCuenta = async () => {
       setLoading(true);
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        throw new Error("Error al obtener los datos");
+      }
       try {
-        const token = sessionStorage.getItem("token");
-        if (!token) {
-          throw new Error("No se encontró el token. Por favor, inicia sesión.");
-        }
-
-        const url = `https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerPersonajesCuenta/${accountID}`;
-
-        const response = await fetch(url, {
-          method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!response.ok) {
-          throw new Error("Falló la solicitud al servidor");
-        }
-
-        const data = await response.json();
-
-        setPersonajes(data.personajes);
+        const fetchObtenerPersonajes = await getObtenerPersonajesCuenta(
+          accountID,
+          token
+        );
+        setPersonajes(fetchObtenerPersonajes);
       } catch (error) {
-        console.error("Error al obtener personajes:", error.message);
+        console.log(error);
       } finally {
         setLoading(false);
       }
     };
-
-    obtenerPersonajesDeLaCuenta();
+    fetchObtenerPersonajesCuenta();
   }, [accountID]);
 
   return (

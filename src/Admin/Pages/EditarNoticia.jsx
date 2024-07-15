@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Layout from "../../Components/Layout";
+import {getObtenerNoticiaEdicion} from '../../Api/ApiNoticias'
 
 const EditarNoticia = () => {
   const { id } = useParams();
@@ -8,19 +9,11 @@ const EditarNoticia = () => {
   const [mensaje, setMensaje] = useState("")
 
   useEffect(() => {
-    const obtenerNoticia = async () => {
-      try {
-        const response = await fetch(
-          `https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerNoticiaId/${id}`
-        );
-        const data = await response.json();
-        setNoticia(data);
-
-      } catch (error) {
-        console.log(error);
+      const fetchNoticiaEdicion = async () => {
+          const datos = await getObtenerNoticiaEdicion()
+          setNoticia(datos)
       }
-    };
-    obtenerNoticia();
+      fetchNoticiaEdicion()
   }, [id]);
 
   const handleChange = (e) => {

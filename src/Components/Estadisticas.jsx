@@ -1,101 +1,43 @@
 import { useState, useEffect } from "react";
+import {
+  getServerEstado,
+  getObtenerPersonajes,
+  getObtenerUsuarios,
+  getObtenerCuentas,
+} from "../Api/ApiEstadisticas";
 
 const Estadisticas = () => {
   const [usuariosOnline, setUsuariosOnline] = useState(0);
   const [totalCuentas, setTotalCuentas] = useState();
   const [totalPersonajes, setTotalPersonajes] = useState(0);
-
-  const [serverEstado, setServerEstado] = useState('')
-
-  useEffect(() => {
-    const serverEstadoGet = async () => {
-      try {
-        const respuesta = await fetch(
-          "https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/estado-servidor",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            cache: "no-cache",
-          }
-        );
-        const resultado = await respuesta.json();
-        if (resultado.estado === 'online') {
-          setServerEstado('ONLINE');
-        } else {
-          setServerEstado('OFFLINE');
-        }
-      } catch (error) {
-        console.log(error);
-        setServerEstado('OFFLINE'); 
-      }
-    };
-
-    serverEstadoGet();
-  }, []);
+  const [serverEstado, setServerEstado] = useState("");
 
   useEffect(() => {
-    const ObtenerPersonajes = async () => {
-      try {
-        const respuesta = await fetch(
-          "https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerPersonajes",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            cache: "no-cache",
-          }
-        );
-        const resultado = await respuesta.json();
-        setTotalPersonajes(resultado.personajes);
-      } catch (error) {
-        console.log(error);
+      const fetchEstadoServer = async () => {
+        const obtenerEstado = await getServerEstado()
+        setServerEstado(obtenerEstado)
       }
+
+    const fetchPersonajes = async () => {
+      const obtenerPersonajes = await getObtenerPersonajes();
+      setTotalPersonajes(obtenerPersonajes);
     };
 
-    ObtenerPersonajes();
-  }, []);
-
-  useEffect(() => {
-    const obtenerUsuarios = async () => {
-      try {
-        const respuesta = await fetch(
-          "https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/usuariosOnlineSlow",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            cache: "no-cache",
-          }
-        );
-        const resultado = await respuesta.json();
-        setUsuariosOnline(resultado.cantidad);
-      } catch (error) {
-        console.log(error);
-      }
+    const fetchObtenerUsuarios = async () => {
+      const obtenerUsuarios = await getObtenerUsuarios();
+      setUsuariosOnline(obtenerUsuarios);
     };
-    obtenerUsuarios();
-  }, []);
 
-  useEffect(() => {
-    const obtenerCuentas = async () => {
-      try {
-        const respuesta = await fetch(
-          "https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/ObtenerCuentas"
-        );
-        const resultado = await respuesta.json();
-        setTotalCuentas(resultado.cuentas);
-      } catch (error) {
-        console.log(error);
-      }
+    const fetchgetObtenerCuentas = async () => {
+      const obtenerCuentas = await getObtenerCuentas();
+      setTotalCuentas(obtenerCuentas);
     };
-    obtenerCuentas();
+
+    fetchgetObtenerCuentas();
+    fetchPersonajes();
+    fetchEstadoServer();
+    fetchObtenerUsuarios();
   }, []);
-
-
 
   return (
     <div className="bg-transparent py-6 sm:py-8 lg:py-12">
@@ -127,7 +69,6 @@ const Estadisticas = () => {
             </div>
           </div>
 
-
           <div className="flex flex-col items-center md:p-4">
             <div className="text-xl font-bold text-indigo-500 sm:text-2xl md:text-3xl">
               {totalPersonajes}
@@ -137,27 +78,25 @@ const Estadisticas = () => {
             </div>
           </div>
           <div className="flex flex-col items-center md:p-4">
-      <div>
-        {serverEstado === 'Cargando...' ? (
-          <div className="text-xl font-bold text-yellow-700 sm:text-2xl md:text-3xl">
-            {serverEstado}
+            <div>
+              {serverEstado === "Cargando..." ? (
+                <div className="text-xl font-bold text-yellow-700 sm:text-2xl md:text-3xl">
+                  {serverEstado}
+                </div>
+              ) : serverEstado === "ONLINE" ? (
+                <div className="text-xl font-bold text-green-700 sm:text-2xl md:text-3xl">
+                  {serverEstado}
+                </div>
+              ) : (
+                <div className="text-xl font-bold text-red-700 sm:text-2xl md:text-3xl">
+                  {serverEstado}
+                </div>
+              )}
+            </div>
+            <div className="text-sm font-semibold text-white sm:text-base">
+              Estado del Servidor
+            </div>
           </div>
-        ) : serverEstado === 'ONLINE' ? (
-          <div className="text-xl font-bold text-green-700 sm:text-2xl md:text-3xl">
-            {serverEstado}
-          </div>
-        ) : (
-          <div className="text-xl font-bold text-red-700 sm:text-2xl md:text-3xl">
-            {serverEstado}
-          </div>
-        )}
-      </div>
-      <div className="text-sm font-semibold text-white sm:text-base">
-        Estado del Servidor
-      </div>
-    </div>
-
-          
         </div>
       </div>
     </div>

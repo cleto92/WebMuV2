@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 const CrearCuenta = () => {
   const { formik, mensajeExito, mensajeError, loading } = useCrearCuenta();
-  
+
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
@@ -19,8 +19,8 @@ const CrearCuenta = () => {
   if (cargando) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-gray-700 via-gray-900 to-black">
-      <Spinner />
-    </div>
+        <Spinner />
+      </div>
     );
   }
 
@@ -35,18 +35,14 @@ const CrearCuenta = () => {
               </h2>
             </div>
             {mensajeExito ? (
-  <div
-    className="bg-green-500 text-white text-sm p-2 rounded-lg mb-4 mx-auto text-center max-w-lg"
-  >
-    {mensajeExito}
-  </div>
-) : mensajeError ? (
-  <div
-    className="bg-red-500 text-white text-sm p-2 rounded-lg mb-4 mx-auto text-center max-w-lg"
-  >
-    {mensajeError}
-  </div>
-) : null}
+              <div className="bg-green-500 text-white text-sm p-2 rounded-lg mb-4 mx-auto text-center max-w-lg">
+                {mensajeExito}
+              </div>
+            ) : mensajeError ? (
+              <div className="bg-red-500 text-white text-sm p-2 rounded-lg mb-4 mx-auto text-center max-w-lg">
+                {mensajeError}
+              </div>
+            ) : null}
             <form
               onSubmit={formik.handleSubmit}
               className="mx-auto grid max-w-screen-md gap-4 sm:grid-cols-2"
@@ -56,7 +52,7 @@ const CrearCuenta = () => {
                   CUENTA
                 </label>
                 <input
-                required
+                  required
                   type="text"
                   name="cuenta"
                   value={formik.values.cuenta}
@@ -69,7 +65,7 @@ const CrearCuenta = () => {
                   NOMBRE
                 </label>
                 <input
-                      required
+                  required
                   type="text"
                   name="nombre"
                   value={formik.values.nombre}
@@ -82,7 +78,7 @@ const CrearCuenta = () => {
                   APELLIDO
                 </label>
                 <input
-                      required
+                  required
                   type="text"
                   name="apellido"
                   value={formik.values.apellido}
@@ -92,14 +88,11 @@ const CrearCuenta = () => {
               </div>
 
               <div className="sm:col-span-2">
-                <label
-           
-                  className="mb-2 inline-block text-sm font-semibold text-white sm:text-base"
-                >
+                <label className="mb-2 inline-block text-sm font-semibold text-white sm:text-base">
                   EMAIL
                 </label>
                 <input
-                      required
+                  required
                   type="email"
                   name="email"
                   value={formik.values.email}
@@ -112,7 +105,7 @@ const CrearCuenta = () => {
                   CONTRASEÑA
                 </label>
                 <input
-                      required
+                  required
                   type="password"
                   name="password"
                   value={formik.values.password}
@@ -125,7 +118,7 @@ const CrearCuenta = () => {
                   REPETIR CONTRASEÑA
                 </label>
                 <input
-                      required
+                  required
                   type="password"
                   name="passwordconfirmacion"
                   value={formik.values.passwordconfirmacion}
@@ -139,7 +132,7 @@ const CrearCuenta = () => {
                   className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
                   type="submit"
                 >
-                  {loading ? <Spinner /> : "Registrarme" }
+                  {loading ? <Spinner /> : "Registrarme"}
                 </button>
               </div>
             </form>

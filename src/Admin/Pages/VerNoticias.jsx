@@ -1,32 +1,22 @@
 import Layout from "../../Components/Layout";
 import { useState, useEffect } from "react";
 import VerNoticia from "../Components/VerNoticia";
+import {obtenerNoticiaPanelAdmin} from "../../Api/ApiNoticias"
 
 
 const VerNoticias = () => {
   const [noticias, setNoticias] = useState([]);
 
-
   useEffect(() => {
     const obtenerNoticias = async () => {
-      try {
-        const data = await fetch("https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerNoticias");
-        const response = await data.json();
-        const noticiasOrdenadas = response.sort((a, b) => {
-          const fechaA = new Date(a.fecha);
-          const fechaB = new Date(b.fecha);
-          return fechaB - fechaA;
-        });
+      const fetchNoticias = await obtenerNoticiaPanelAdmin()
+      setNoticias(fetchNoticias)
+    }
+    obtenerNoticias()
+  }, [])
+  
 
-        setNoticias(noticiasOrdenadas);
-        console.log(noticiasOrdenadas);
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    obtenerNoticias();
-  }, []);
 
   return (
     <Layout>

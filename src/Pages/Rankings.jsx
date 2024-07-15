@@ -3,6 +3,7 @@ import Ranking from "../Components/Ranking";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Spinner } from "@nextui-org/react";
+import { getObtenerPersonajesRanking } from "../Api/ApiRanking";
 
 const Rankings = () => {
   const [rankingJugadores, setRankingJugadores] = useState([]);
@@ -10,30 +11,22 @@ const Rankings = () => {
 
   useEffect(() => {
     const obtenerJugadores = async () => {
-      try {
-        const respuesta = await fetch(
-          `https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerUserReset`
-        );
-        const resultado = await respuesta.json();
-        setRankingJugadores(resultado.usuariosReset);
-        console.log(resultado);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 3000);
-      }
+      const fetchgetObtenerJugadores = await getObtenerPersonajesRanking();
+      setRankingJugadores(fetchgetObtenerJugadores);
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
     };
+
     obtenerJugadores();
   }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-700 via-gray-900 to-black">
       {loading ? (
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-gray-700 via-gray-900 to-black">
-      <Spinner />
-    </div>
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-gray-700 via-gray-900 to-black">
+          <Spinner />
+        </div>
       ) : (
         <Layout>
           <div>
@@ -41,7 +34,7 @@ const Rankings = () => {
               to="/rankingClanes"
               className="inline-block px-2 py-2 text-white font-semibold bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow-lg hover:bg-gradient-to-br focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:scale-105"
             >
-             RANKING DE CLANES
+              RANKING DE CLANES
             </Link>
           </div>
           <div className="overflow-x-auto mt-10">

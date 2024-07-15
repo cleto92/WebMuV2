@@ -2,6 +2,7 @@ import Layout from '../Components/Layout'
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import NoticiaID from '../Components/NoticiaId'
+import { getObtenerNoticia } from '../Api/ApiNoticias';
 
 const Noticia = () => {
 
@@ -9,19 +10,13 @@ const Noticia = () => {
     const { id } = useParams(); 
   
     useEffect(() => {
-      const obtenerNoticia = async () => {
-        try {
-          const respuesta = await fetch(`https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerNoticiaId/${id}`); 
-          const datos = await respuesta.json();
-          setNoticia(datos);
-          console.log([datos])
-        } catch (error) {
-          console.error("Error al obtener la noticia:", error);
-        }
+      const fetchNoticia = async () => {
+        const datos = await getObtenerNoticia(id);
+        setNoticia(datos);
       };
   
-      obtenerNoticia();
-    }, [id]); 
+      fetchNoticia();
+    }, [id]);
 
   return (
     <Layout>

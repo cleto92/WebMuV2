@@ -5,33 +5,24 @@ import { Spinner } from "@nextui-org/react";
 import Layout from "../Components/Layout";
 import { Link } from "react-router-dom";
 import RankingClan from "../Components/RankingClan";
+import {getObtenerClanesRanking} from '../Api/ApiRanking'
 
 const RankingClanes = () => {
   const [cargando, setCargando] = useState(true);
   const [clanes, setClanes] = useState([]);
 
   useEffect(() => {
-    const obtenerClanes = async () => {
-      try {
-        const respuesta = await fetch(
-          `https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/obtenerClanes`
-        );
-        const resultado = await respuesta.json();
-        setClanes(resultado.clanes);
-      } catch (error) {
-        console.log(error);
+      const obtenerClanes = async () => {
+       const fetchClanes = await getObtenerClanesRanking()
+       setClanes(fetchClanes)
+       setTimeout(() => {
+        setCargando(false)
+       }, 3000);
       }
-    };
-    obtenerClanes();
+      obtenerClanes()
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setCargando(false);
-    }, 3000);
 
-    return () => clearTimeout(timer);
-  }, []);
 
   if (cargando) {
     return (

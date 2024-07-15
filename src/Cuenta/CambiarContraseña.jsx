@@ -1,69 +1,11 @@
+// src/pages/CambiarContraseña.js
+
 import Layout from "../Components/Layout";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { Spinner } from "@nextui-org/react";
-import { useAuth } from "../Context/AuthContext";
+import { useCambiarContraseña } from "../Api/Api";
 
 const CambiarContraseña = () => {
-  const [nuevopassword, setNuevoPassword] = useState("");
-  const [confirmarpassword, setConfirmarPassword] = useState("");
-  const navigate = useNavigate();
-  const [mensajeExito, setMensajeExito] = useState("");
-  const [mensajeError, setMensajeError] = useState("");
-
-  const { cerrarSesion } = useAuth();
-  const token = sessionStorage.getItem("token");
-  const [cargando, setCargando] = useState(true);
-  useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    if (!token) {
-      navigate("/Login");
-    }
-  }, [navigate]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setCargando(false);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch(
-        `https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/cambiarPassword`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/JSON",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            nuevopassword,
-            confirmarpassword,
-          }),
-        }
-      );
-
-      const resultado = await response.json();
-
-      if (!response.ok) {
-        throw new Error(resultado.mensaje);
-      }
-
-      setMensajeExito(resultado.mensaje);
-      setMensajeError("");
-      setTimeout(() => {
-        cerrarSesion();
-        navigate("/Login");
-      }, 3000);
-    } catch (error) {
-      setMensajeError(error.message);
-    }
-  };
+  const { cargando, mensajeExito, mensajeError, formik } = useCambiarContraseña();
 
   if (cargando) {
     return (
@@ -80,39 +22,30 @@ const CambiarContraseña = () => {
           <h2 className="mb-4 text-center text-2xl font-bold text-blue-500 md:mb-8 lg:text-3xl">
             Cambiar Contraseña
           </h2>
-          <form
-            onSubmit={handleSubmit}
-            className="mx-auto max-w-lg rounded-lg border"
-          >
+          <form onSubmit={formik.handleSubmit} className="mx-auto max-w-lg rounded-lg border">
             <div className="flex flex-col gap-4 p-4 md:p-8">
               <div>
-                <label
-                  htmlFor="password"
-                  className="mb-2 inline-block text-sm text-white font-semibold sm:text-base"
-                >
+                <label htmlFor="nuevopassword" className="mb-2 inline-block text-sm text-white font-semibold sm:text-base">
                   Nueva Contraseña
                 </label>
                 <input
                   required
-                  name="password"
+                  name="nuevopassword"
                   type="password"
                   className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
-                  value={nuevopassword}
-                  onChange={(e) => setNuevoPassword(e.target.value)}
+                  value={formik.values.nuevopassword}
+                  onChange={formik.handleChange}
                 />
               </div>
               <div>
-                <label
-                  htmlFor="confirmarpassword"
-                  className="mb-2 inline-block text-sm text-white font-semibold sm:text-base"
-                >
+                <label htmlFor="confirmarpassword" className="mb-2 inline-block text-sm text-white font-semibold sm:text-base">
                   Confirmar Contraseña
                 </label>
                 <input
                   required
                   name="confirmarpassword"
-                  value={confirmarpassword}
-                  onChange={(e) => setConfirmarPassword(e.target.value)}
+                  value={formik.values.confirmarpassword}
+                  onChange={formik.handleChange}
                   type="password"
                   className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
                 />
