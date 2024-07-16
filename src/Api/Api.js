@@ -1,9 +1,11 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
+// eslint-disable-next-line react-hooks/exhaustive-deps
 import { useFormik } from "formik";
 import { useState, useEffect } from "react";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { useParams } from "react-router-dom";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -250,6 +252,63 @@ export const useRecuperarCuenta = () => {
       cargando,
       mensajeExito,
       mensajeError,
+      formik,
+    };
+  };
+
+
+  export const useEditarNoticia = () => {
+    const { id } = useParams();
+    const [cargando, setCargando] = useState(true);
+    const [mensaje, setMensaje] = useState("");
+
+    const fetchNoticiaEdicion = async () => {
+      const response = await fetch(`${baseURL}/obtenerNoticia/${id}`);
+      const data = await response.json();
+      return data;
+    };
+  
+    const formik = useFormik({
+      initialValues: {
+        fecha: "",
+        titulo: "",
+        subtitulo: "",
+        autor: "",
+        contenido: ""
+      },
+      onSubmit: async (values) => {
+        try {
+          const respuesta = await fetch(`${baseURL}/editarNoticia/${id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          });
+  
+          const resultado = await respuesta.json();
+          setMensaje(resultado.mensaje);
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      enableReinitialize: true,
+    });
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        const datos = await fetchNoticiaEdicion();
+        formik.setValues(datos);
+        setCargando(false);
+      };
+  
+      fetchData();
+
+    }, [id]);
+  
+    return {
+      cargando,
+      mensaje,
       formik,
     };
   };

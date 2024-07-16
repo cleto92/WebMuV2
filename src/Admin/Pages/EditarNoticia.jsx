@@ -1,49 +1,17 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import Layout from "../../Components/Layout";
-import {getObtenerNoticiaEdicion} from '../../Api/ApiNoticias'
+import { Spinner } from "@nextui-org/react";
+import { useEditarNoticia } from "../../Api/Api";
 
 const EditarNoticia = () => {
-  const { id } = useParams();
-  const [noticia, setNoticia] = useState({});
-  const [mensaje, setMensaje] = useState("")
+  const { cargando, mensaje, formik } = useEditarNoticia();
 
-  useEffect(() => {
-      const fetchNoticiaEdicion = async () => {
-          const datos = await getObtenerNoticiaEdicion()
-          setNoticia(datos)
-      }
-      fetchNoticiaEdicion()
-  }, [id]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNoticia({
-      ...noticia,
-      [name]: value,
-    });
-  };
-
-  const editSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const respuesta = await fetch(
-        `https://webmubackend2-59ca8aeb5ade.herokuapp.com/api/editarNoticia/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(noticia),
-        }
-      );
-      const resultado = await respuesta.json();
-      console.log(resultado);
-      setMensaje(resultado.mensaje)
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  if (cargando) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-gray-700 via-gray-900 to-black">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -53,11 +21,11 @@ const EditarNoticia = () => {
             Editar Noticia
           </h1>
           {mensaje && (
-          <div className="mb-4 text-center font-semibold text-green-600 bg-green-100 p-3 rounded">
-            {mensaje}
-          </div>
-        )}
-          <form onSubmit={editSubmit} className="space-y-6">
+            <div className="mb-4 text-center font-semibold text-green-600 bg-green-100 p-3 rounded">
+              {mensaje}
+            </div>
+          )}
+          <form onSubmit={formik.handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 gap-6">
               <label htmlFor="fecha" className="block">
                 <span className="text-red-600 font-bold">Fecha:</span>
@@ -66,8 +34,8 @@ const EditarNoticia = () => {
                   name="fecha"
                   type="date"
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 py-3 text-base"
-                  value={noticia.fecha}
-                  onChange={handleChange}
+                  value={formik.values.fecha}
+                  onChange={formik.handleChange}
                 />
               </label>
               <label htmlFor="titulo" className="block">
@@ -77,8 +45,8 @@ const EditarNoticia = () => {
                   name="titulo"
                   type="text"
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 py-3 text-base"
-                  value={noticia.titulo}
-                  onChange={handleChange}
+                  value={formik.values.titulo}
+                  onChange={formik.handleChange}
                 />
               </label>
               <label htmlFor="subtitulo" className="block">
@@ -88,19 +56,19 @@ const EditarNoticia = () => {
                   name="subtitulo"
                   type="text"
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 py-3 text-base"
-                  value={noticia.subtitulo}
-                  onChange={handleChange}
+                  value={formik.values.subtitulo}
+                  onChange={formik.handleChange}
                 />
               </label>
-              <label htmlFor="subtitulo" className="block">
+              <label htmlFor="autor" className="block">
                 <span className="text-red-600 font-bold">Autor:</span>
                 <input
                   required
-                  name="subtitulo"
+                  name="autor"
                   type="text"
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 py-3 text-base"
-                  value={noticia.autor}
-                  onChange={handleChange}
+                  value={formik.values.autor}
+                  onChange={formik.handleChange}
                 />
               </label>
               <label htmlFor="contenido" className="block">
@@ -109,8 +77,8 @@ const EditarNoticia = () => {
                   className="w-full h-96 p-2 border border-gray-300 rounded-md resize-none"
                   placeholder="Escribe algo aquí..."
                   name="contenido"
-                  value={noticia.contenido}
-                  onChange={handleChange}
+                  value={formik.values.contenido}
+                  onChange={formik.handleChange}
                 />
               </label>
             </div>
